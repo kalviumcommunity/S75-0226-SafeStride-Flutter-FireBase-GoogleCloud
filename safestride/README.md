@@ -174,38 +174,3 @@ Run unit and widget tests using:
 ```bash
 flutter test
 ```
-# Introduction to Flutter and Dart
-
-## Project Structure
-
-lib/
-├── main.dart
-├── screens/
-├── widgets/
-├── models/
-├── services/
-
-### Directory Purpose
-
-- **main.dart**  
-  Entry point of the application. Initializes the app and loads the first screen.
-
-- **screens/**  
-  Contains full UI screens such as WelcomeScreen, LoginScreen, etc.
-
-- **widgets/**  
-  Reusable UI components shared across screens (buttons, cards, custom inputs).
-
-- **models/**  
-  Data models used for handling structured data.
-
-- **services/**  
-  Business logic, API calls, and Firebase integration (future use).
-
-### Modular Design Benefits
-This structure separates concerns, improves readability, and allows the app to scale without becoming cluttered.
-
-### Naming Conventions
-- Files: `snake_case.dart`
-- Classes & Widgets: `PascalCase`
-- Variables & functions: `camelCase`
