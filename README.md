@@ -209,3 +209,10 @@ This structure separates concerns, improves readability, and allows the app to s
 - Files: `snake_case.dart`
 - Classes & Widgets: `PascalCase`
 - Variables & functions: `camelCase`
+
+
+## 📱 Responsive Home Screen Implementation – SafeStride
+
+In this sprint, I implemented a responsive home screen for the SafeStride app using Flutter. I created a new screen called `responsive_home.dart` inside the screens directory. The layout includes a header, main content section, and a footer button. I used `MediaQuery` to detect the screen width and determine whether the device is a phone or tablet. Based on the screen size, the app displays a ListView layout for phones and a GridView layout for tablets.
+
+I used flexible widgets like `Expanded`, `Container`, and `GridView` to ensure the UI adjusts properly without overflow. Padding and text sizes were also adjusted dynamically to maintain consistency across devices. The screen was tested in both portrait and landscape orientations using emulators. This implementation ensures that SafeStride provides a consistent and user-friendly experience across different screen sizes and device types.
