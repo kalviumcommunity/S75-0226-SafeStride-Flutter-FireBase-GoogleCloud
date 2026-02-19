@@ -1,25 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'screens/welcome_screen.dart';
-import 'screens/responsive_home.dart';
+import 'screens/login_screen.dart';
 
-void main() {
-  runApp(const SafeStrideApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
-class SafeStrideApp extends StatelessWidget {
-  const SafeStrideApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SafeStride',
       debugShowCheckedModeBanner: false,
-
-      // change this for Sprint-2 testing
-      home: const ResponsiveHome(),
-
-      // later switch back to WelcomeScreen
-      // home: const WelcomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
