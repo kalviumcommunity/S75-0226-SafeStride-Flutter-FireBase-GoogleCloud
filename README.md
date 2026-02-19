@@ -216,3 +216,89 @@ This structure separates concerns, improves readability, and allows the app to s
 In this sprint, I implemented a responsive home screen for the SafeStride app using Flutter. I created a new screen called `responsive_home.dart` inside the screens directory. The layout includes a header, main content section, and a footer button. I used `MediaQuery` to detect the screen width and determine whether the device is a phone or tablet. Based on the screen size, the app displays a ListView layout for phones and a GridView layout for tablets.
 
 I used flexible widgets like `Expanded`, `Container`, and `GridView` to ensure the UI adjusts properly without overflow. Padding and text sizes were also adjusted dynamically to maintain consistency across devices. The screen was tested in both portrait and landscape orientations using emulators. This implementation ensures that SafeStride provides a consistent and user-friendly experience across different screen sizes and device types.
+
+
+# Flutter Environment Setup and First App Run
+
+## Overview
+
+This document verifies the successful installation and configuration of the Flutter development environment and the execution of the first Flutter application on an emulator.
+
+---
+
+## 1. Flutter SDK Installation
+
+**Steps Followed:**
+
+* Downloaded Flutter SDK from the official website.
+* Extracted it to: `C:\src\flutter` (Windows) / preferred development directory.
+* Added `flutter\bin` to system PATH.
+* Verified installation using:
+
+```
+flutter doctor
+```
+
+* Resolved any missing dependencies reported by Flutter Doctor.
+
+---
+
+## 2. IDE Setup
+
+**Android Studio Installation**
+
+* Installed Android Studio.
+* Installed required components:
+
+  * Android SDK
+  * SDK Platform Tools
+  * AVD Manager
+* Installed Flutter and Dart plugins via Plugin Marketplace.
+
+---
+
+## 3. Emulator Configuration
+
+* Opened AVD Manager.
+* Created a virtual device (e.g., Pixel 6).
+* Installed Android 13 system image.
+* Launched emulator.
+* Verified device detection:
+
+```
+flutter devices
+```
+
+---
+
+## 4. First Flutter App Execution
+
+Created a new Flutter project:
+
+```
+flutter create first_flutter_app
+cd first_flutter_app
+flutter run
+```
+
+The default Flutter counter app successfully ran on the emulator.
+
+---
+
+## Setup Verification
+
+### 1. Flutter Doctor Output
+
+(Add screenshot here showing all green checkmarks)
+
+### 2. Running App on Emulator
+
+(Add screenshot here showing default counter app running)
+
+---
+
+## Reflection
+
+During setup, common challenges included environment variable configuration and SDK dependency resolution. Running `flutter doctor` helped identify and fix issues quickly.
+
+This setup establishes a complete local mobile development environment, enabling real-time app development, debugging, and future Firebase integration.
