@@ -209,3 +209,109 @@ This structure separates concerns, improves readability, and allows the app to s
 - Files: `snake_case.dart`
 - Classes & Widgets: `PascalCase`
 - Variables & functions: `camelCase`
+
+## Widget Tree Concept
+
+In Flutter, everything is a widget — text, buttons, containers, and even layouts.
+
+Widgets are arranged in a tree structure, known as the widget tree, where each node represents a part of the UI.
+
+The root of the tree is usually the MaterialApp or CupertinoApp widget, followed by nested child widgets.
+
+### Example Widget Tree Structure
+
+```
+MaterialApp
+ ┣ initialRoute: '/'
+ ┣ routes: {...}
+ ┗ home: WelcomeScreen
+      ┣ Scaffold
+      ┃  ┣ AppBar
+      ┃  ┃  ┗ Text('SafeStride')
+      ┃  ┗ Body
+      ┃     ┗ Center
+      ┃        ┗ Column
+      ┃           ┣ Text('Welcome to SafeStride!')
+      ┃           ┣ Icon(Icons.directions_walk)
+      ┃           ┣ ElevatedButton('Toggle State')
+      ┃           ┗ Column (Demos)
+      ┃              ┣ Text('Flutter Learning Demos:')
+      ┃              ┣ ElevatedButton('Widget Tree Demo')
+      ┃              ┣ ElevatedButton('Profile Card Demo')
+      ┃              ┗ ElevatedButton('Counter App Demo')
+```
+
+### Widget Tree for Counter App Demo
+
+```
+Scaffold
+ ┣ AppBar
+ ┃  ┗ Text('Counter App Demo')
+ ┗ Body
+    ┗ Container (with gradient)
+       ┗ Center
+          ┗ Column
+             ┣ Text('Counter App Demo')
+             ┣ Container (display box)
+             ┃  ┗ Text(displaying count)
+             ┣ Row (controls)
+             ┃  ┣ FloatingActionButton(decrement)
+             ┃  ┣ FloatingActionButton(reset)
+             ┃  ┗ FloatingActionButton(increment)
+             ┗ Container (instructions)
+                ┗ Text(explanation of reactive UI)
+```
+
+## Reactive UI Model
+
+Flutter's UI is reactive, meaning that when data (state) changes, the framework automatically rebuilds the affected widgets.
+
+The UI is not manually redrawn; instead, Flutter efficiently re-renders only what needs updating.
+
+### Example using setState():
+
+```dart
+class CounterApp extends StatefulWidget {
+  @override
+  _CounterAppState createState() => _CounterAppState();
+}
+
+class _CounterAppState extends State<CounterApp> {
+  int count = 0;
+
+  void increment() {
+    setState(() {
+      count++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Reactive UI Example')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Count: $count'),
+            ElevatedButton(onPressed: increment, child: Text('Increment')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+Every time the button is pressed, the state changes (count++), and Flutter rebuilds the relevant parts of the widget tree.
+
+## Interactive Elements Demonstrating State Updates
+
+The SafeStride app includes several examples that demonstrate state updates:
+
+1. **Welcome Screen**: Toggles between welcome message and updated message when button is pressed
+2. **Counter App Demo**: Updates count value when increment/decrement buttons are pressed
+3. **Profile Card Demo**: Toggles favorite status and online/offline status
+4. **Widget Tree Demo**: Shows various reactive UI elements that update when interacted with
+
+These examples showcase how Flutter's reactive model rebuilds the widget tree when state changes occur.
