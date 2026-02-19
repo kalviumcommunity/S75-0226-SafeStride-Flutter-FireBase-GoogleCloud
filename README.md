@@ -302,3 +302,19 @@ The default Flutter counter app successfully ran on the emulator.
 During setup, common challenges included environment variable configuration and SDK dependency resolution. Running `flutter doctor` helped identify and fix issues quickly.
 
 This setup establishes a complete local mobile development environment, enabling real-time app development, debugging, and future Firebase integration.
+
+
+
+Documentation file:
+PROJECT_STRUCTURE.md
+
+The structure includes:
+
+- lib/ → Main app logic
+- android/ → Android build files
+- ios/ → iOS build files
+- test/ → Testing files
+- pubspec.yaml → Dependency management
+- assets/ → Images and static resources
+
+Understanding this structure helps build scalable and maintainable Flutter apps.
