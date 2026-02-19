@@ -210,111 +210,108 @@ This structure separates concerns, improves readability, and allows the app to s
 - Classes & Widgets: `PascalCase`
 - Variables & functions: `camelCase`
 
+## Widget Tree Concept
 
-## 📱 Responsive Home Screen Implementation – SafeStride
+In Flutter, everything is a widget — text, buttons, containers, and even layouts.
 
-In this sprint, I implemented a responsive home screen for the SafeStride app using Flutter. I created a new screen called `responsive_home.dart` inside the screens directory. The layout includes a header, main content section, and a footer button. I used `MediaQuery` to detect the screen width and determine whether the device is a phone or tablet. Based on the screen size, the app displays a ListView layout for phones and a GridView layout for tablets.
+Widgets are arranged in a tree structure, known as the widget tree, where each node represents a part of the UI.
 
-I used flexible widgets like `Expanded`, `Container`, and `GridView` to ensure the UI adjusts properly without overflow. Padding and text sizes were also adjusted dynamically to maintain consistency across devices. The screen was tested in both portrait and landscape orientations using emulators. This implementation ensures that SafeStride provides a consistent and user-friendly experience across different screen sizes and device types.
+The root of the tree is usually the MaterialApp or CupertinoApp widget, followed by nested child widgets.
 
-
-# Flutter Environment Setup and First App Run
-
-## Overview
-
-This document verifies the successful installation and configuration of the Flutter development environment and the execution of the first Flutter application on an emulator.
-
----
-
-## 1. Flutter SDK Installation
-
-**Steps Followed:**
-
-* Downloaded Flutter SDK from the official website.
-* Extracted it to: `C:\src\flutter` (Windows) / preferred development directory.
-* Added `flutter\bin` to system PATH.
-* Verified installation using:
+### Example Widget Tree Structure
 
 ```
-flutter doctor
+MaterialApp
+ ┣ initialRoute: '/'
+ ┣ routes: {...}
+ ┗ home: WelcomeScreen
+      ┣ Scaffold
+      ┃  ┣ AppBar
+      ┃  ┃  ┗ Text('SafeStride')
+      ┃  ┗ Body
+      ┃     ┗ Center
+      ┃        ┗ Column
+      ┃           ┣ Text('Welcome to SafeStride!')
+      ┃           ┣ Icon(Icons.directions_walk)
+      ┃           ┣ ElevatedButton('Toggle State')
+      ┃           ┗ Column (Demos)
+      ┃              ┣ Text('Flutter Learning Demos:')
+      ┃              ┣ ElevatedButton('Widget Tree Demo')
+      ┃              ┣ ElevatedButton('Profile Card Demo')
+      ┃              ┗ ElevatedButton('Counter App Demo')
 ```
 
-* Resolved any missing dependencies reported by Flutter Doctor.
-
----
-
-## 2. IDE Setup
-
-**Android Studio Installation**
-
-* Installed Android Studio.
-* Installed required components:
-
-  * Android SDK
-  * SDK Platform Tools
-  * AVD Manager
-* Installed Flutter and Dart plugins via Plugin Marketplace.
-
----
-
-## 3. Emulator Configuration
-
-* Opened AVD Manager.
-* Created a virtual device (e.g., Pixel 6).
-* Installed Android 13 system image.
-* Launched emulator.
-* Verified device detection:
+### Widget Tree for Counter App Demo
 
 ```
-flutter devices
+Scaffold
+ ┣ AppBar
+ ┃  ┗ Text('Counter App Demo')
+ ┗ Body
+    ┗ Container (with gradient)
+       ┗ Center
+          ┗ Column
+             ┣ Text('Counter App Demo')
+             ┣ Container (display box)
+             ┃  ┗ Text(displaying count)
+             ┣ Row (controls)
+             ┃  ┣ FloatingActionButton(decrement)
+             ┃  ┣ FloatingActionButton(reset)
+             ┃  ┗ FloatingActionButton(increment)
+             ┗ Container (instructions)
+                ┗ Text(explanation of reactive UI)
 ```
 
----
+## Reactive UI Model
 
-## 4. First Flutter App Execution
+Flutter's UI is reactive, meaning that when data (state) changes, the framework automatically rebuilds the affected widgets.
 
-Created a new Flutter project:
+The UI is not manually redrawn; instead, Flutter efficiently re-renders only what needs updating.
 
+### Example using setState():
+
+```dart
+class CounterApp extends StatefulWidget {
+  @override
+  _CounterAppState createState() => _CounterAppState();
+}
+
+class _CounterAppState extends State<CounterApp> {
+  int count = 0;
+
+  void increment() {
+    setState(() {
+      count++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Reactive UI Example')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Count: $count'),
+            ElevatedButton(onPressed: increment, child: Text('Increment')),
+          ],
+        ),
+      ),
+    );
+  }
+}
 ```
-flutter create first_flutter_app
-cd first_flutter_app
-flutter run
-```
 
-The default Flutter counter app successfully ran on the emulator.
+Every time the button is pressed, the state changes (count++), and Flutter rebuilds the relevant parts of the widget tree.
 
----
+## Interactive Elements Demonstrating State Updates
 
-## Setup Verification
+The SafeStride app includes several examples that demonstrate state updates:
 
-### 1. Flutter Doctor Output
+1. **Welcome Screen**: Toggles between welcome message and updated message when button is pressed
+2. **Counter App Demo**: Updates count value when increment/decrement buttons are pressed
+3. **Profile Card Demo**: Toggles favorite status and online/offline status
+4. **Widget Tree Demo**: Shows various reactive UI elements that update when interacted with
 
-(Add screenshot here showing all green checkmarks)
-
-### 2. Running App on Emulator
-
-(Add screenshot here showing default counter app running)
-
----
-
-## Reflection
-
-During setup, common challenges included environment variable configuration and SDK dependency resolution. Running `flutter doctor` helped identify and fix issues quickly.
-
-This setup establishes a complete local mobile development environment, enabling real-time app development, debugging, and future Firebase integration.
-
-
-
-Documentation file:
-PROJECT_STRUCTURE.md
-
-The structure includes:
-
-- lib/ → Main app logic
-- android/ → Android build files
-- ios/ → iOS build files
-- test/ → Testing files
-- pubspec.yaml → Dependency management
-- assets/ → Images and static resources
-
-Understanding this structure helps build scalable and maintainable Flutter apps.
+These examples showcase how Flutter's reactive model rebuilds the widget tree when state changes occur.
