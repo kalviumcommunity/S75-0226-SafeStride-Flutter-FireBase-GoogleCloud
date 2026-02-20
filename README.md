@@ -353,3 +353,12 @@ Only the stateful portion of the UI rebuilds on interaction.
 Reflection
 
 Stateful widgets enable dynamic and interactive Flutter apps by allowing controlled UI updates through state changes. Separating static and reactive UI improves clarity, performance, and maintainability by enforcing clear responsibility boundaries.
+
+
+## Hot Reload, Debug Console, and DevTools Demonstration
+
+In this task, I used Hot Reload, Debug Console, and Flutter DevTools in my Flutter app.
+
+Hot Reload allowed me to instantly apply UI changes without restarting the app, making development faster. The Debug Console helped me track logs using debugPrint() and monitor app behavior.
+
+I used Flutter DevTools to inspect the widget tree and analyze performance. These tools improve productivity, debugging, and app performance.
