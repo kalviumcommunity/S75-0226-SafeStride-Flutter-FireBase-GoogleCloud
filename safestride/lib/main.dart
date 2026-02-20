@@ -5,12 +5,11 @@ import 'screens/welcome_screen.dart';
 import 'widgets/widget_tree_demo.dart';
 import 'widgets/profile_card_demo.dart';
 import 'widgets/counter_app_demo.dart';
+import 'screens/stateless_stateful.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/widget-tree-demo': (context) => const WidgetTreeDemo(),
         '/profile-card-demo': (context) => const ProfileCardDemo(),
         '/counter-app-demo': (context) => const CounterAppDemo(),
+        '/stateless-stateful-demo': (context) => const WelcomeScreen(),
       },
     );
   }
