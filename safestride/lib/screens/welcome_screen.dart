@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
-import 'signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -14,6 +13,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   late final AnimationController _controller;
   late final Animation<double> _fade;
   late final Animation<Offset> _slide;
+  bool isWelcome = true;
 
   @override
   void initState() {
@@ -46,9 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     return Scaffold(
       backgroundColor: isWelcome ? Colors.white : Colors.grey.shade200,
-      appBar: AppBar(
-        title: const Text('SafeStride'),
-      ),
+      appBar: AppBar(title: const Text('SafeStride')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -73,14 +71,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               child: const Text('Toggle State'),
             ),
             const SizedBox(height: 20),
-            
+
             // Demo navigation buttons
             const Text(
               'Flutter Learning Demos:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 15),
             Padding(
@@ -92,7 +87,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       Navigator.pushNamed(context, '/widget-tree-demo');
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
                       backgroundColor: Colors.blue,
                     ),
                     child: const Text(
@@ -106,7 +104,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       Navigator.pushNamed(context, '/profile-card-demo');
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
                       backgroundColor: Colors.green,
                     ),
                     child: const Text(
@@ -120,7 +121,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       Navigator.pushNamed(context, '/counter-app-demo');
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
                       backgroundColor: Colors.orange,
                     ),
                     child: const Text(
@@ -131,7 +135,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
