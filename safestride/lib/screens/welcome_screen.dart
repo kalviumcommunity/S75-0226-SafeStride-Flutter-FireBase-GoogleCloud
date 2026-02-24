@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -7,11 +8,41 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _fade;
+  late final Animation<Offset> _slide;
   bool isWelcome = true;
 
   @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    );
+
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.08),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+ multi_screen
     // Get screen size for responsive design
     final screenSize = MediaQuery.of(context).size;
     final isMobile = screenSize.width < 600;
@@ -31,9 +62,50 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               constraints: BoxConstraints(
                 maxWidth: isDesktop ? 800 : isTablet ? 600 : double.infinity,
               ),
+
+    final size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      backgroundColor: isWelcome ? Colors.white : Colors.grey.shade200,
+      appBar: AppBar(title: const Text('SafeStride')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              isWelcome ? 'Welcome to SafeStride!' : 'You clicked the button!',
+              style: const TextStyle(fontSize: 24),
+            ),
+            const SizedBox(height: 20),
+            Icon(
+              Icons.directions_walk,
+              size: 80,
+              color: isWelcome ? Colors.blue : Colors.green,
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isWelcome = !isWelcome;
+                });
+              },
+              child: const Text('Toggle State'),
+            ),
+            const SizedBox(height: 20),
+
+            // Demo navigation buttons
+            const Text(
+              'Flutter Learning Demos:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+ main
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+multi_screen
                   Text(
                     isWelcome ? 'Welcome to SafeStride!' : 'You clicked the button!',
                     style: TextStyle(
@@ -46,6 +118,40 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Icons.directions_walk,
                     size: isMobile ? 60 : isTablet ? 70 : 80,
                     color: isWelcome ? Colors.blue : Colors.green,
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/widget-tree-demo');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: const Text(
+                      'Widget Tree Demo',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/profile-card-demo');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                    child: const Text(
+                      'Profile Card Demo',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+ main
                   ),
                   SizedBox(height: isMobile ? 24 : 36),
                   ElevatedButton(
@@ -54,6 +160,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         isWelcome = !isWelcome;
                       });
                     },
+ multi_screen
                     child: const Text('Toggle State'),
                   ),
                   SizedBox(height: isMobile ? 20 : 30),
@@ -64,6 +171,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     style: TextStyle(
                       fontSize: isMobile ? 16 : 18,
                       fontWeight: FontWeight.bold,
+
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
+                      backgroundColor: Colors.orange,
+ main
                     ),
                   ),
                   SizedBox(height: isMobile ? 12 : 15),
@@ -202,4 +317,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
+ multi_screen
 }
+
+}
+
+class _FeatureItem extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _FeatureItem({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: Colors.green),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+          ),
+        ],
+      ),
+    );
+  }
+}
+ main

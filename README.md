@@ -315,3 +315,50 @@ The SafeStride app includes several examples that demonstrate state updates:
 4. **Widget Tree Demo**: Shows various reactive UI elements that update when interacted with
 
 These examples showcase how Flutter's reactive model rebuilds the widget tree when state changes occur.
+
+
+
+# Stateless vs Stateful Widget Demo
+
+## Overview
+This Flutter demo showcases the fundamental difference between **StatelessWidget** and **StatefulWidget** by clearly separating static UI from interactive, state-driven UI. The app displays a static header and an interactive counter to demonstrate how Flutter rebuilds widgets based on state changes.
+
+---
+
+## StatelessWidget
+A `StatelessWidget` does not store or manage any mutable state. Its UI depends only on the data provided to it and remains unchanged unless its parent rebuilds it.
+
+**Use cases:** headers, labels, icons, static text.
+
+```dart
+class DemoHeader extends StatelessWidget {
+  final String title;
+
+  const DemoHeader({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(title);
+  }
+}
+
+Demo Behavior
+
+The header remains unchanged (StatelessWidget).
+
+Pressing the button increments the counter (StatefulWidget).
+
+Only the stateful portion of the UI rebuilds on interaction.
+
+Reflection
+
+Stateful widgets enable dynamic and interactive Flutter apps by allowing controlled UI updates through state changes. Separating static and reactive UI improves clarity, performance, and maintainability by enforcing clear responsibility boundaries.
+
+
+## Hot Reload, Debug Console, and DevTools Demonstration
+
+In this task, I used Hot Reload, Debug Console, and Flutter DevTools in my Flutter app.
+
+Hot Reload allowed me to instantly apply UI changes without restarting the app, making development faster. The Debug Console helped me track logs using debugPrint() and monitor app behavior.
+
+I used Flutter DevTools to inspect the widget tree and analyze performance. These tools improve productivity, debugging, and app performance.
