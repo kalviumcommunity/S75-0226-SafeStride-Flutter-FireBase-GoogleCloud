@@ -341,7 +341,7 @@ class DemoHeader extends StatelessWidget {
     return Text(title);
   }
 }
-
+```
 Demo Behavior
 
 The header remains unchanged (StatelessWidget).
@@ -355,6 +355,7 @@ Reflection
 Stateful widgets enable dynamic and interactive Flutter apps by allowing controlled UI updates through state changes. Separating static and reactive UI improves clarity, performance, and maintainability by enforcing clear responsibility boundaries.
 
 
+
 ## Hot Reload, Debug Console, and DevTools Demonstration
 
 In this task, I used Hot Reload, Debug Console, and Flutter DevTools in my Flutter app.
@@ -362,3 +363,52 @@ In this task, I used Hot Reload, Debug Console, and Flutter DevTools in my Flutt
 Hot Reload allowed me to instantly apply UI changes without restarting the app, making development faster. The Debug Console helped me track logs using debugPrint() and monitor app behavior.
 
 I used Flutter DevTools to inspect the widget tree and analyze performance. These tools improve productivity, debugging, and app performance.
+
+
+# Flutter Multi-Screen Navigation
+
+This project demonstrates basic multi-screen navigation in Flutter using the Navigator class and named routes. The app contains two screens: HomeScreen and SecondScreen. Navigation is handled using Navigator.pushNamed() to move forward and Navigator.pop() to return.
+
+Routes are defined inside MaterialApp using the routes map and initialRoute is set to "/". This keeps navigation organized and easy to scale.
+
+Example routes setup in main.dart:
+
+```dart
+routes: {
+  '/': (context) => HomeScreen(),
+  '/second': (context) => SecondScreen(),
+}
+```
+
+Navigator manages a stack of screens, where each new screen is pushed on top and removed when popped. Named routes improve readability, maintainability, and scalability in larger apps.
+
+
+
+# Responsive Layout Design
+
+## Overview
+
+This project demonstrates a responsive layout using Flutter’s core layout widgets:
+
+- Container
+- Row
+- Column
+- Expanded
+- MediaQuery
+
+The layout adapts to different screen sizes.
+
+Phone → Vertical layout  
+Tablet → Horizontal layout  
+
+---
+
+## Code Example
+
+```dart
+Row(
+ children: [
+  Expanded(child: ProfileCard()),
+  Expanded(child: Dashboard()),
+ ]
+)
