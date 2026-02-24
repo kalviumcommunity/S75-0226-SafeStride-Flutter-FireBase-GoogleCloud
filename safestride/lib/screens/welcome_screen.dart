@@ -1,348 +1,184 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _fade;
-  late final Animation<Offset> _slide;
-  bool isWelcome = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    );
-
-    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
-
-    _slide = Tween<Offset>(
-      begin: const Offset(0, 0.08),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
- multi_screen
-    // Get screen size for responsive design
-    final screenSize = MediaQuery.of(context).size;
-    final isMobile = screenSize.width < 600;
-    final isTablet = screenSize.width >= 600 && screenSize.width < 1024;
-    final isDesktop = screenSize.width >= 1024;
+
+    final width = MediaQuery.of(context).size.width;
+    final isMobile = width < 600;
 
     return Scaffold(
-      backgroundColor: isWelcome ? Colors.white : Colors.grey.shade200,
-      appBar: AppBar(
-        title: const Text('SafeStride'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(isMobile ? 16.0 : 32.0),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: isDesktop ? 800 : isTablet ? 600 : double.infinity,
-              ),
 
-    final size = MediaQuery.of(context).size;
+      backgroundColor: Colors.white,
 
-    return Scaffold(
-      backgroundColor: isWelcome ? Colors.white : Colors.grey.shade200,
-      appBar: AppBar(title: const Text('SafeStride')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              isWelcome ? 'Welcome to SafeStride!' : 'You clicked the button!',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            Icon(
-              Icons.directions_walk,
-              size: 80,
-              color: isWelcome ? Colors.blue : Colors.green,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  isWelcome = !isWelcome;
-                });
-              },
-              child: const Text('Toggle State'),
-            ),
-            const SizedBox(height: 20),
+      body: SafeArea(
 
-            // Demo navigation buttons
-            const Text(
-              'Flutter Learning Demos:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
- main
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-multi_screen
-                  Text(
-                    isWelcome ? 'Welcome to SafeStride!' : 'You clicked the button!',
-                    style: TextStyle(
-                      fontSize: isMobile ? 20 : isTablet ? 28 : 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+        child: Center(
+
+          child: Container(
+
+            constraints: const BoxConstraints(maxWidth: 900),
+
+            padding: EdgeInsets.all(isMobile ? 20 : 40),
+
+            child: Column(
+
+              mainAxisAlignment: MainAxisAlignment.center,
+
+              children: [
+
+                /// LOGO / ICON
+                Container(
+
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    shape: BoxShape.circle,
                   ),
-                  SizedBox(height: isMobile ? 16 : 24),
-                  Icon(
-                    Icons.directions_walk,
-                    size: isMobile ? 60 : isTablet ? 70 : 80,
-                    color: isWelcome ? Colors.blue : Colors.green,
 
-                  ElevatedButton(
+                  child: Icon(
+                    Icons.shield,
+                    size: isMobile ? 60 : 80,
+                    color: Colors.blue,
+                  ),
+
+                ),
+
+                const SizedBox(height: 30),
+
+                /// APP NAME
+                Text(
+                  "SafeStride",
+                  style: TextStyle(
+                    fontSize: isMobile ? 32 : 42,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                /// TAGLINE
+                Text(
+                  "Navigate safely. Reach confidently.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: isMobile ? 16 : 20,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                /// FEATURE LIST
+                _feature(Icons.map, "Real-time safe navigation"),
+                _feature(Icons.security, "Safety-optimized routes"),
+                _feature(Icons.location_on, "Live location tracking"),
+                _feature(Icons.warning, "Danger zone alerts"),
+
+                const SizedBox(height: 50),
+
+                /// PRIMARY BUTTON
+                SizedBox(
+                  width: double.infinity,
+
+                  child: ElevatedButton(
+
                     onPressed: () {
-                      Navigator.pushNamed(context, '/widget-tree-demo');
+                      Navigator.pushNamed(context, '/home');
                     },
+
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 24,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: Colors.blue,
                     ),
-                    child: const Text(
-                      'Widget Tree Demo',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/profile-card-demo');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 24,
-                      ),
-                      backgroundColor: Colors.green,
-                    ),
-                    child: const Text(
-                      'Profile Card Demo',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
- main
-                  ),
-                  SizedBox(height: isMobile ? 24 : 36),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isWelcome = !isWelcome;
-                      });
-                    },
- multi_screen
-                    child: const Text('Toggle State'),
-                  ),
-                  SizedBox(height: isMobile ? 20 : 30),
-                  
-                  // Navigation section
-                  Text(
-                    'Multi-Screen Navigation:',
-                    style: TextStyle(
-                      fontSize: isMobile ? 16 : 18,
-                      fontWeight: FontWeight.bold,
 
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 24,
+                    child: const Text(
+                      "Start Safe Journey",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
                       ),
-                      backgroundColor: Colors.orange,
- main
                     ),
+
                   ),
-                  SizedBox(height: isMobile ? 12 : 15),
-                  Wrap(
-                    spacing: isMobile ? 8 : 12,
-                    runSpacing: isMobile ? 8 : 12,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 10 : 12,
-                            horizontal: isMobile ? 16 : 24,
-                          ),
-                          backgroundColor: Colors.purple,
+
+                ),
+
+                const SizedBox(height: 15),
+
+                /// LOGIN BUTTON
+                SizedBox(
+                  width: double.infinity,
+
+                  child: OutlinedButton(
+
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const LoginScreen(),
                         ),
-                        child: Text(
-                          'Go to Home Screen',
-                          style: TextStyle(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: isMobile ? 8 : 12),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context, 
-                            '/second',
-                            arguments: {'message': 'Hello from Welcome Screen!'},
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 10 : 12,
-                            horizontal: isMobile ? 16 : 24,
-                          ),
-                          backgroundColor: Colors.red,
-                        ),
-                        child: Text(
-                          'Go to Second Screen (with data)',
-                          style: TextStyle(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: isMobile ? 20 : 30),
-                  
-                  // Demo navigation buttons
-                  Text(
-                    'Flutter Learning Demos:',
-                    style: TextStyle(
-                      fontSize: isMobile ? 16 : 18,
-                      fontWeight: FontWeight.bold,
+                      );
+                    },
+
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
+
+                    child: const Text(
+                      "Login / Signup",
+                      style: TextStyle(fontSize: 16),
+                    ),
+
                   ),
-                  SizedBox(height: isMobile ? 12 : 15),
-                  Wrap(
-                    spacing: isMobile ? 8 : 12,
-                    runSpacing: isMobile ? 8 : 12,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/widget-tree-demo');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 10 : 12,
-                            horizontal: isMobile ? 16 : 24,
-                          ),
-                          backgroundColor: Colors.blue,
-                        ),
-                        child: Text(
-                          'Widget Tree Demo',
-                          style: TextStyle(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: isMobile ? 8 : 12),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/profile-card-demo');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 10 : 12,
-                            horizontal: isMobile ? 16 : 24,
-                          ),
-                          backgroundColor: Colors.green,
-                        ),
-                        child: Text(
-                          'Profile Card Demo',
-                          style: TextStyle(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: isMobile ? 8 : 12),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/counter-app-demo');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 10 : 12,
-                            horizontal: isMobile ? 16 : 24,
-                          ),
-                          backgroundColor: Colors.orange,
-                        ),
-                        child: Text(
-                          'Counter App Demo',
-                          style: TextStyle(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+
+                ),
+
+              ],
+
             ),
+
           ),
+
         ),
+
       ),
+
     );
+
   }
- multi_screen
-}
 
-}
+  Widget _feature(IconData icon, String text) {
 
-class _FeatureItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _FeatureItem({required this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
+
+      padding: const EdgeInsets.symmetric(vertical: 6),
+
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+
+        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
+
           Icon(icon, color: Colors.green),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+
+          const SizedBox(width: 10),
+
+          Text(
+            text,
+            style: const TextStyle(fontSize: 16),
           ),
+
         ],
+
       ),
+
     );
+
   }
+
 }
- main
