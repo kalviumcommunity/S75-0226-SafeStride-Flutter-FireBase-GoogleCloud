@@ -364,3 +364,17 @@ MaterialApp(
     '/details': (context) => DetailsScreen(),
   },
 );
+
+## Screens
+
+Home Screen: Displays a button to go to the Details screen
+
+Details Screen: Displays a button to return to Home
+
+## Reflection
+
+Navigator manages screen transitions using a stack.
+
+Named routes make navigation cleaner and easier to manage in large apps.
+
+Flutter pushes new screens onto the stack and pops them when going back.
