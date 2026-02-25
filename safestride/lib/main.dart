@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:flutter/material.dart';
 
+// Screens
 import 'screens/welcome_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/second_screen.dart';
+import 'screens/scrollable_views.dart';
+
+// Widget demos
 import 'widgets/widget_tree_demo.dart';
 import 'widgets/profile_card_demo.dart';
 import 'widgets/counter_app_demo.dart';
-
-import 'screens/home_screen.dart';
-import 'screens/second_screen.dart';
-import 'screens/stateless_stateful.dart';
-import 'screens/responsive_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
