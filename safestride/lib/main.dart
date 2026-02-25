@@ -15,9 +15,7 @@ import 'widgets/counter_app_demo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -28,7 +26,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
 
       initialRoute: '/',
@@ -39,40 +36,17 @@ class MyApp extends StatelessWidget {
       ),
 
       routes: {
-
         '/': (context) => const WelcomeScreen(),
-
         '/home': (context) => HomeScreen(),
-
         '/second': (context) => SecondScreen(),
 
+        // Widget demos
         '/widget-tree-demo': (context) => const WidgetTreeDemo(),
-
         '/profile-card-demo': (context) => const ProfileCardDemo(),
-
         '/counter-app-demo': (context) => const CounterAppDemo(),
 
-        '/stateless-stateful-demo': (context) => const WelcomeScreen(),
-
-        '/responsive-layout': (context) => const ResponsiveLayout(),
-
-      },
-
-      onGenerateRoute: (settings) {
-
-        if (settings.name == '/second') {
-
-          return MaterialPageRoute(
-            builder: (context) => SecondScreen(),
-            settings: settings,
-          );
-
-        }
-
-        return MaterialPageRoute(
-          builder: (context) => const WelcomeScreen(),
-        );
-
+        // ✅ REQUIRED FOR THIS ASSIGNMENT
+        '/scrollable-views': (context) => const ScrollableViews(),
       },
     );
   }
