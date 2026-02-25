@@ -18,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -27,32 +28,51 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
+
       initialRoute: '/',
+
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
       routes: {
+
         '/': (context) => const WelcomeScreen(),
+
         '/home': (context) => HomeScreen(),
+
         '/second': (context) => SecondScreen(),
+
         '/widget-tree-demo': (context) => const WidgetTreeDemo(),
+
         '/profile-card-demo': (context) => const ProfileCardDemo(),
+
         '/counter-app-demo': (context) => const CounterAppDemo(),
+
         '/stateless-stateful-demo': (context) => const WelcomeScreen(),
-        '/scrollable-views': (context) => const ScrollableViews(),
+
+        '/responsive-layout': (context) => const ResponsiveLayout(),
+
       },
+
       onGenerateRoute: (settings) {
+
         if (settings.name == '/second') {
+
           return MaterialPageRoute(
             builder: (context) => SecondScreen(),
             settings: settings,
           );
+
         }
+
         return MaterialPageRoute(
           builder: (context) => const WelcomeScreen(),
         );
+
       },
     );
   }
