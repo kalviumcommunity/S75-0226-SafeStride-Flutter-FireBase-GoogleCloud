@@ -408,7 +408,7 @@ Tablet → Horizontal layout
 
 ---
 
-## Code Example
+<!-- ## Code Example
 
 ```dart
 Row(
@@ -416,33 +416,62 @@ Row(
   Expanded(child: ProfileCard()),
   Expanded(child: Dashboard()),
  ]
-)
+) -->
 
 
-# Scrollable Views in Flutter
+
+# User Input Form with Validation
+
+##  Project Overview
+This Flutter project demonstrates handling user input using TextFields,
+Buttons, and Form widgets. The app collects user name and email, validates
+the input, and displays feedback.
+
+---
+
+##  Features
+- Text input using TextFormField
+- Form validation for name and email
+- Submit button with feedback using SnackBar
+
+---
+
+##  Code Examples
+
+### TextFormField with Validation
+<!-- ```dart
+TextFormField(
+  decoration: InputDecoration(labelText: 'Email'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    } else if (!value.contains('@')) {
+      return 'Enter a valid email';
+    }
+    return null;
+  },
+); -->
+
+
+# User Input Form – Flutter
 
 ## Description
-This project demonstrates how to build efficient scrollable layouts in Flutter using `ListView` and `GridView`. It showcases both horizontal and grid-based scrolling while ensuring smooth performance and proper layout handling.
+This project demonstrates how to handle user input in Flutter using TextFormField, Form, and validation.  
+The form collects a user's name and email, validates the input, and displays feedback using SnackBar.
 
 ## Features
-- Horizontal `ListView.builder` for dynamic lists
-- `GridView.builder` for structured grid layouts
-- Optimized scrolling using lazy loading
-- No overflow or rendering issues
+- Name and Email input fields
+- Input validation
+- Submit button
+- Success feedback using SnackBar
 
-## Key Concepts Used
-- `SingleChildScrollView`
-- `ListView.builder`
-- `GridView.builder`
-- `shrinkWrap` and scroll physics control
-
-## Screenshots
-_Add screenshots of the ListView and GridView here._
-
-## Reflection
-- `ListView` is suitable for linear data, while `GridView` is ideal for structured, multi-column layouts.
-- `ListView.builder` improves performance by creating widgets only when they are visible.
-- Proper use of scroll physics and layout constraints prevents overflow and lag.
-
-## Conclusion
-This implementation ensures smooth scrolling, clean UI structure, and efficient rendering of dynamic content in Flutter.
+## Key Code Snippet
+```dart
+TextFormField(
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+    return null;
+  },
+);
