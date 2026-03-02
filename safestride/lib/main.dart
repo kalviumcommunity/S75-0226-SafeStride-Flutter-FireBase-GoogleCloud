@@ -16,9 +16,8 @@ import 'screens/user_input_form.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -29,15 +28,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       initialRoute: '/',
+
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/home': (context) => HomeScreen(),
         '/second': (context) => SecondScreen(),
+
+        // Widget demos
         '/widget-tree-demo': (context) => const WidgetTreeDemo(),
         '/profile-card-demo': (context) => const ProfileCardDemo(),
         '/counter-app-demo': (context) => const CounterAppDemo(),
