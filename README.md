@@ -417,3 +417,32 @@ Row(
   Expanded(child: Dashboard()),
  ]
 )
+
+
+# Scrollable Views in Flutter
+
+## Description
+This project demonstrates how to build efficient scrollable layouts in Flutter using `ListView` and `GridView`. It showcases both horizontal and grid-based scrolling while ensuring smooth performance and proper layout handling.
+
+## Features
+- Horizontal `ListView.builder` for dynamic lists
+- `GridView.builder` for structured grid layouts
+- Optimized scrolling using lazy loading
+- No overflow or rendering issues
+
+## Key Concepts Used
+- `SingleChildScrollView`
+- `ListView.builder`
+- `GridView.builder`
+- `shrinkWrap` and scroll physics control
+
+## Screenshots
+_Add screenshots of the ListView and GridView here._
+
+## Reflection
+- `ListView` is suitable for linear data, while `GridView` is ideal for structured, multi-column layouts.
+- `ListView.builder` improves performance by creating widgets only when they are visible.
+- Proper use of scroll physics and layout constraints prevents overflow and lag.
+
+## Conclusion
+This implementation ensures smooth scrolling, clean UI structure, and efficient rendering of dynamic content in Flutter.
