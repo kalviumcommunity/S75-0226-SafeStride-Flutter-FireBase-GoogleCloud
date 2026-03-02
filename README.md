@@ -407,7 +407,7 @@ Tablet → Horizontal layout
 
 ---
 
-## Code Example
+<!-- ## Code Example
 
 ```dart
 Row(
@@ -415,4 +415,62 @@ Row(
   Expanded(child: ProfileCard()),
   Expanded(child: Dashboard()),
  ]
-)
+) -->
+
+
+
+# User Input Form with Validation
+
+##  Project Overview
+This Flutter project demonstrates handling user input using TextFields,
+Buttons, and Form widgets. The app collects user name and email, validates
+the input, and displays feedback.
+
+---
+
+##  Features
+- Text input using TextFormField
+- Form validation for name and email
+- Submit button with feedback using SnackBar
+
+---
+
+##  Code Examples
+
+### TextFormField with Validation
+<!-- ```dart
+TextFormField(
+  decoration: InputDecoration(labelText: 'Email'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    } else if (!value.contains('@')) {
+      return 'Enter a valid email';
+    }
+    return null;
+  },
+); -->
+
+
+# User Input Form – Flutter
+
+## Description
+This project demonstrates how to handle user input in Flutter using TextFormField, Form, and validation.  
+The form collects a user's name and email, validates the input, and displays feedback using SnackBar.
+
+## Features
+- Name and Email input fields
+- Input validation
+- Submit button
+- Success feedback using SnackBar
+
+## Key Code Snippet
+```dart
+TextFormField(
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+    return null;
+  },
+);

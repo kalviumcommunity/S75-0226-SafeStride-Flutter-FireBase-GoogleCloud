@@ -12,6 +12,7 @@ import 'screens/scrollable_views.dart';
 import 'widgets/widget_tree_demo.dart';
 import 'widgets/profile_card_demo.dart';
 import 'widgets/counter_app_demo.dart';
+import 'screens/user_input_form.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,18 +42,8 @@ class MyApp extends StatelessWidget {
         '/profile-card-demo': (context) => const ProfileCardDemo(),
         '/counter-app-demo': (context) => const CounterAppDemo(),
         '/stateless-stateful-demo': (context) => const WelcomeScreen(),
-        '/scrollable-views': (context) => const ScrollableViews(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == '/second') {
-          return MaterialPageRoute(
-            builder: (context) => SecondScreen(),
-            settings: settings,
-          );
-        }
-        return MaterialPageRoute(
-          builder: (context) => const WelcomeScreen(),
-        );
+        '/scrollable-views': (context) => ScrollableViews(),
+        '/user-input-form': (context) => const UserInputForm(),
       },
     );
   }
