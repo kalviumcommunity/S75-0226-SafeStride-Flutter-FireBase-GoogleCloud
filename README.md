@@ -344,6 +344,7 @@ Only the stateful portion of the UI rebuilds on interaction.
 Reflection
 
 Stateful widgets enable dynamic and interactive Flutter apps by allowing controlled UI updates through state changes. Separating static and reactive UI improves clarity, performance, and maintainability by enforcing clear responsibility boundaries.
+```
 
 # Flutter Navigation Demo
 
@@ -475,3 +476,35 @@ TextFormField(
     return null;
   },
 );
+
+
+# State Management Demo – Flutter
+
+Demonstrates local UI state management using `setState()` in Flutter.
+
+## How setState() Works
+```dart
+void _incrementCounter() {
+  setState(() {
+    _counter++;  // Flutter rebuilds only the affected widget
+  });
+}
+```
+
+## Features
+- Increment / Decrement counter
+- Background color changes at count ≥ 5 (green) and ≥ 10 (red)
+- Reset button
+- Status message changes based on count
+
+## Reflection
+
+**Stateless vs Stateful:**
+- `StatelessWidget` renders once and never changes — good for static UI.
+- `StatefulWidget` holds mutable state and rebuilds when `setState()` is called.
+
+**Why setState() matters:**
+It signals Flutter's rendering engine to re-run `build()` for that widget only, keeping the UI in sync with your data.
+
+**Performance considerations:**
+Calling `setState()` too broadly (e.g., at the top-level widget) causes unnecessary rebuilds. Keep stateful widgets small and low in the widget tree to minimize rebuild scope.
