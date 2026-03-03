@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _obscurePassword = true;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
 
   @override
   void dispose() {
@@ -34,6 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     setState(() => _isLoading = false);
+
+    if (user != null && context.mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+      );
+    }
+  }
+
+  Future<void> _loginWithGoogle(BuildContext context) async {
+    setState(() => _isGoogleLoading = true);
+
+    final user = await _auth.signInWithGoogle();
+
+    setState(() => _isGoogleLoading = false);
 
     if (user != null && context.mounted) {
       Navigator.pushReplacement(
@@ -64,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 8),
               Text(
                 "Login to continue",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Colors.grey,
+                ),
               ),
 
               const SizedBox(height: 40),
@@ -133,13 +149,77 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
+              const SizedBox(height: 16),
+
+              // Divider
+              Row(
+                children: [
+                  const Expanded(child: Divider(thickness: 1)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      "OR",
+                      style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+                    ),
+                  ),
+                  const Expanded(child: Divider(thickness: 1)),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // Google Sign-In Button
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed:
+                      _isGoogleLoading ? null : () => _loginWithGoogle(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black87,
+                    elevation: 1,
+                    side: BorderSide(color: Colors.grey.shade300),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: _isGoogleLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.network(
+                              'https://www.google.com/favicon.ico',
+                              height: 22,
+                              width: 22,
+                              errorBuilder: (_, __, ___) =>
+                                  const Icon(Icons.g_mobiledata, size: 26),
+                            ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              "Continue with Google",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+
               const SizedBox(height: 24),
 
               // Signup Redirect
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don’t have an account?"),
+                  const Text("Don't have an account?"),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
