@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../services/firestore_service.dart';
-import '../widgets/custom_dashboard_button.dart';
-import '../widgets/favorite_toggle_button.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -11,173 +9,212 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final isMobile = screenWidth < 600;
-    final isTablet = screenWidth >= 600 && screenWidth < 1024;
-    final isDesktop = screenWidth >= 1024;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("SafeStride Dashboard"),
         centerTitle: true,
       ),
 
-      body: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: isDesktop
-                ? 900
-                : isTablet
-                ? 700
-                : double.infinity,
+      // ✅ LayoutBuilder for responsive switching
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth < 600) {
+            return _buildMobileLayout(context);
+          } else {
+            return _buildTabletLayout(context);
+          }
+        },
+      ),
+    );
+  }
+
+  // ===============================
+  // ✅ MOBILE LAYOUT
+  // ===============================
+  Widget _buildMobileLayout(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Padding(
+      padding: EdgeInsets.all(screenWidth * 0.05),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Text(
+            "Welcome Back 👋",
+            style: TextStyle(
+              fontSize: screenWidth * 0.06,
+              fontWeight: FontWeight.bold,
+            ),
           ),
 
-          padding: EdgeInsets.all(isMobile ? 16 : 24),
+          SizedBox(height: screenHeight * 0.02),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Text(
+            "Manage your notes and dashboard",
+            style: TextStyle(fontSize: screenWidth * 0.04, color: Colors.grey),
+          ),
 
-            children: [
-              // HEADER
-              Text(
-                "Welcome Back 👋",
-                style: TextStyle(
-                  fontSize: isMobile ? 22 : 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          SizedBox(height: screenHeight * 0.03),
 
-              const SizedBox(height: 8),
+          // Input Card
+          _buildInputCard(screenWidth),
 
-              Text(
-                "Manage your notes and dashboard",
-                style: TextStyle(
-                  fontSize: isMobile ? 14 : 16,
-                  color: Colors.grey,
-                ),
-              ),
+          SizedBox(height: screenHeight * 0.03),
 
-              const SizedBox(height: 24),
-              CustomDashboardButton(
-                label: "Go to Second Screen",
-                icon: Icons.arrow_forward,
-                color: Colors.green,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/second');
-                },
-              ),
+          Text(
+            "Your Notes",
+            style: TextStyle(
+              fontSize: screenWidth * 0.05,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
 
-              const SizedBox(height: 24),
+          SizedBox(height: screenHeight * 0.02),
 
-              // INPUT CARD
-              Container(
-                padding: const EdgeInsets.all(16),
+          // Notes List
+          Expanded(child: _buildNotesList()),
+        ],
+      ),
+    );
+  }
 
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                ),
+  // ===============================
+  // ✅ TABLET LAYOUT
+  // ===============================
+  Widget _buildTabletLayout(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
 
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: textController,
-                        decoration: const InputDecoration(
-                          hintText: "Enter a note...",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-
-                    ElevatedButton(
-                      onPressed: () {
-                        if (textController.text.isNotEmpty) {
-                          firestore.addData(textController.text);
-                          textController.clear();
-                        }
-                      },
-                      child: const Text("Add"),
-                    ),
-                  ],
-                ),
-              ),
-
-              const FavoriteToggleButton(),
-              const SizedBox(height: 24),
-
-              // NOTES HEADER
-              Text(
-                "Your Notes",
-                style: TextStyle(
-                  fontSize: isMobile ? 18 : 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // NOTES LIST
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(12),
+    return Padding(
+      padding: EdgeInsets.all(screenWidth * 0.04),
+      child: Row(
+        children: [
+          // Left Panel
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Dashboard",
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.035,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
 
-                  child: StreamBuilder(
-                    stream: firestore.readData(),
+                const SizedBox(height: 20),
 
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+                _buildInputCard(screenWidth),
+              ],
+            ),
+          ),
 
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const Center(child: Text("No notes yet"));
-                      }
+          const SizedBox(width: 30),
 
-                      final docs = snapshot.data!.docs;
+          // Right Panel
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Your Notes",
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
 
-                      return ListView.builder(
-                        padding: const EdgeInsets.all(8),
+                const SizedBox(height: 20),
 
-                        itemCount: docs.length,
+                Expanded(child: _buildNotesList()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(docs[index]['text']),
+  // ===============================
+  // ✅ INPUT CARD (Reusable Section)
+  // ===============================
+  Widget _buildInputCard(double screenWidth) {
+    return Container(
+      padding: EdgeInsets.all(screenWidth * 0.03),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: textController,
+              decoration: const InputDecoration(
+                hintText: "Enter a note...",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          ElevatedButton(
+            onPressed: () {
+              if (textController.text.isNotEmpty) {
+                firestore.addData(textController.text);
+                textController.clear();
+              }
+            },
+            child: const Text("Add"),
+          ),
+        ],
+      ),
+    );
+  }
 
-                              leading: const Icon(
-                                Icons.note,
-                                color: Colors.blue,
-                              ),
+  // ===============================
+  // ✅ NOTES LIST
+  // ===============================
+  Widget _buildNotesList() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: StreamBuilder(
+        stream: firestore.readData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                              trailing: IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(child: Text("No notes yet"));
+          }
 
-                                onPressed: () {
-                                  firestore.deleteData(docs[index].id);
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      );
+          final docs = snapshot.data!.docs;
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: docs.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: const Icon(Icons.note, color: Colors.blue),
+                  title: Text(docs[index]['text']),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      firestore.deleteData(docs[index].id);
                     },
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }

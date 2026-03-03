@@ -555,3 +555,22 @@ Each instance maintains independent state.
 
 ## Reflection
 By extracting common UI components into reusable widgets, the application becomes cleaner, more scalable, and easier to maintain as the project grows.
+
+
+
+# Responsive Design Implementation
+
+## Overview
+This task demonstrates responsive UI design using **MediaQuery** and **LayoutBuilder** to ensure the SafeStride dashboard adapts seamlessly across mobile and tablet devices.
+
+---
+
+## MediaQuery Usage
+MediaQuery was used to:
+- Dynamically scale font sizes
+- Adjust padding and spacing proportionally
+- Adapt UI elements based on screen width and height
+
+Example:
+```dart
+final screenWidth = MediaQuery.of(context).size.width;
