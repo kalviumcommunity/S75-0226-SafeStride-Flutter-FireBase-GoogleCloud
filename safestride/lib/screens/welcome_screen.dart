@@ -109,6 +109,30 @@ class WelcomeScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 15),
+                const SizedBox(height: 15),
+
+/// ASSET DEMO BUTTON
+SizedBox(
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.pushNamed(context, '/asset-demo');
+    },
+    style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      backgroundColor: Colors.green,
+    ),
+    child: const Text(
+      "View Asset Demo",
+      style: TextStyle(
+        fontSize: 18,
+        color: Colors.white,
+      ),
+    ),
+  ),
+),
+  const SizedBox(height: 15),
+  const SizedBox(height: 15),
 
                 /// LOGIN BUTTON
                 SizedBox(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screens/asset_demo_screen.dart';
+
 
 // Screens
 import 'screens/welcome_screen.dart';
@@ -48,6 +50,7 @@ class MyApp extends StatelessWidget {
 
         // ✅ NEW — State Management Demo (Sprint 2)
         '/state-management-demo': (context) => const StateManagementDemo(),
+        '/asset-demo': (context) => const AssetDemoScreen(),
       },
     );
   }
