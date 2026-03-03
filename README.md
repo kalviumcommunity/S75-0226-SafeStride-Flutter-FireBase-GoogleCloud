@@ -508,3 +508,50 @@ It signals Flutter's rendering engine to re-run `build()` for that widget only, 
 
 **Performance considerations:**
 Calling `setState()` too broadly (e.g., at the top-level widget) causes unnecessary rebuilds. Keep stateful widgets small and low in the widget tree to minimize rebuild scope.
+
+
+# Reusable Custom Widgets
+
+## Overview
+This task demonstrates the creation and reuse of custom Stateless and Stateful widgets to improve modular UI design in the SafeStride app.
+
+## Stateless Widget
+
+### CustomDashboardButton
+A reusable button component with customizable:
+- Label
+- Icon
+- Color
+- Navigation action
+
+**Used in:**
+- HomeScreen
+- SecondScreen
+
+This ensures consistent styling and avoids code duplication.
+
+---
+
+## Stateful Widget
+
+### FavoriteToggleButton
+A reusable toggle button that manages its own internal state.
+
+**Used in:**
+- HomeScreen
+- SecondScreen
+
+Each instance maintains independent state.
+
+---
+
+## Benefits of Reusable Widgets
+- Reduces repeated UI code
+- Improves readability and maintainability
+- Ensures consistent design across screens
+- Makes future updates easier
+
+---
+
+## Reflection
+By extracting common UI components into reusable widgets, the application becomes cleaner, more scalable, and easier to maintain as the project grows.

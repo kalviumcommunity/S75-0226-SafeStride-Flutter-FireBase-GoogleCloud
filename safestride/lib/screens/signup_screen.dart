@@ -11,7 +11,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _auth = AuthService();
+  final _auth = AuthService.instance;
 
   bool _obscurePassword = true;
   bool _isLoading = false;

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/custom_dashboard_button.dart';
+import '../widgets/favorite_toggle_button.dart';
 
 class SecondScreen extends StatelessWidget {
   @override
@@ -10,7 +12,8 @@ class SecondScreen extends StatelessWidget {
     final isDesktop = screenSize.width >= 1024;
 
     // Get arguments passed from the previous screen
-    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +27,11 @@ class SecondScreen extends StatelessWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: isDesktop ? 800 : isTablet ? 600 : double.infinity,
+                maxWidth: isDesktop
+                    ? 800
+                    : isTablet
+                    ? 600
+                    : double.infinity,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -32,10 +39,15 @@ class SecondScreen extends StatelessWidget {
                   Text(
                     'Second Screen',
                     style: TextStyle(
-                      fontSize: isMobile ? 24 : isTablet ? 28 : 32,
+                      fontSize: isMobile
+                          ? 24
+                          : isTablet
+                          ? 28
+                          : 32,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                   SizedBox(height: isMobile ? 16 : 20),
                   Text(
                     arguments?['message'] ?? 'Welcome to the second screen!',
@@ -45,6 +57,8 @@ class SecondScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
+
+                  const FavoriteToggleButton(),
                   SizedBox(height: isMobile ? 30 : 40),
                   ElevatedButton(
                     onPressed: () {
@@ -104,6 +118,14 @@ class SecondScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                  ),
+                  CustomDashboardButton(
+                    label: "Back to Home",
+                    icon: Icons.home,
+                    color: Colors.orange,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/home');
+                    },
                   ),
                 ],
               ),
