@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
+import 'package:safestride/services/auth_service.dart';
 import 'signup_screen.dart';
 import 'welcome_screen.dart';
 
@@ -13,7 +13,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _auth = AuthService();
+  late final AuthService _auth;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = AuthService.instance;
+  }
 
   bool _obscurePassword = true;
   bool _isLoading = false;
@@ -80,9 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 8),
               Text(
                 "Login to continue",
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: Colors.grey),
               ),
 
               const SizedBox(height: 40),
@@ -159,7 +165,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       "OR",
-                      style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                   const Expanded(child: Divider(thickness: 1)),
@@ -173,8 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed:
-                      _isGoogleLoading ? null : () => _loginWithGoogle(context),
+                  onPressed: _isGoogleLoading
+                      ? null
+                      : () => _loginWithGoogle(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black87,

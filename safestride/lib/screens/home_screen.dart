@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/firestore_service.dart';
+import '../widgets/custom_dashboard_button.dart';
+import '../widgets/favorite_toggle_button.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -9,7 +11,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
 
     final isMobile = screenWidth < 600;
@@ -17,32 +18,27 @@ class HomeScreen extends StatelessWidget {
     final isDesktop = screenWidth >= 1024;
 
     return Scaffold(
-
       appBar: AppBar(
         title: const Text("SafeStride Dashboard"),
         centerTitle: true,
       ),
 
       body: Center(
-
         child: Container(
-
           constraints: BoxConstraints(
             maxWidth: isDesktop
                 ? 900
                 : isTablet
-                    ? 700
-                    : double.infinity,
+                ? 700
+                : double.infinity,
           ),
 
           padding: EdgeInsets.all(isMobile ? 16 : 24),
 
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-
               // HEADER
               Text(
                 "Welcome Back 👋",
@@ -63,6 +59,16 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 24),
+              CustomDashboardButton(
+                label: "Go to Second Screen",
+                icon: Icons.arrow_forward,
+                color: Colors.green,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/second');
+                },
+              ),
+
+              const SizedBox(height: 24),
 
               // INPUT CARD
               Container(
@@ -74,9 +80,7 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 child: Row(
-
                   children: [
-
                     Expanded(
                       child: TextField(
                         controller: textController,
@@ -91,20 +95,18 @@ class HomeScreen extends StatelessWidget {
 
                     ElevatedButton(
                       onPressed: () {
-
                         if (textController.text.isNotEmpty) {
                           firestore.addData(textController.text);
                           textController.clear();
                         }
-
                       },
                       child: const Text("Add"),
                     ),
-
                   ],
                 ),
               ),
 
+              const FavoriteToggleButton(),
               const SizedBox(height: 24),
 
               // NOTES HEADER
@@ -121,49 +123,34 @@ class HomeScreen extends StatelessWidget {
               // NOTES LIST
               Expanded(
                 child: Container(
-
                   decoration: BoxDecoration(
                     color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
 
                   child: StreamBuilder(
-
                     stream: firestore.readData(),
 
                     builder: (context, snapshot) {
-
-                      if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
                       }
 
-                      if (!snapshot.hasData ||
-                          snapshot.data!.docs.isEmpty) {
-                        return const Center(
-                          child: Text("No notes yet"),
-                        );
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return const Center(child: Text("No notes yet"));
                       }
 
                       final docs = snapshot.data!.docs;
 
                       return ListView.builder(
-
                         padding: const EdgeInsets.all(8),
 
                         itemCount: docs.length,
 
                         itemBuilder: (context, index) {
-
                           return Card(
-
                             child: ListTile(
-
-                              title: Text(
-                                docs[index]['text'],
-                              ),
+                              title: Text(docs[index]['text']),
 
                               leading: const Icon(
                                 Icons.note,
@@ -177,36 +164,21 @@ class HomeScreen extends StatelessWidget {
                                 ),
 
                                 onPressed: () {
-                                  firestore.deleteData(
-                                    docs[index].id,
-                                  );
+                                  firestore.deleteData(docs[index].id);
                                 },
                               ),
-
                             ),
                           );
-
                         },
-
                       );
-
                     },
-
                   ),
-
                 ),
               ),
-
             ],
-
           ),
-
         ),
-
       ),
-
     );
-
   }
-
 }
