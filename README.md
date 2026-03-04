@@ -574,3 +574,4 @@ MediaQuery was used to:
 Example:
 ```dart
 final screenWidth = MediaQuery.of(context).size.width;
+
