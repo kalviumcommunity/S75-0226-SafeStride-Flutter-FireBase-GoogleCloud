@@ -574,4 +574,48 @@ MediaQuery was used to:
 Example:
 ```dart
 final screenWidth = MediaQuery.of(context).size.width;
+```
 
+# Flutter Animations & Transitions
+
+## Animations Implemented
+- **AnimatedContainer** – Smoothly changes size, color, and border radius on tap
+- **AnimatedOpacity** – Fades UI elements in and out
+- **Animated Button** – Shrinks and changes shadow on press (implicit animation)
+- **Explicit Rotation** – AnimationController-driven continuous rotation
+- **Page Transition** – SlideTransition via PageRouteBuilder between screens
+
+## Reflection
+**Why are animations important for UX?**  
+Animations guide user attention, confirm interactions, and make the app feel responsive and alive rather than static.
+
+**Implicit vs Explicit animations?**  
+Implicit (AnimatedContainer, AnimatedOpacity) handle animation automatically when a value changes. Explicit (AnimationController) give full control over timing, loops, and complex sequences.
+
+**How to apply in team project?**  
+Use fade-ins on screen load, button press feedback animations, and slide transitions between main screens for a polished SafeStride experience.
+
+
+# SafeStride – Firebase Setup
+
+## Overview
+
+This project connects a Flutter application to Firebase.
+Firebase provides backend services like Authentication, Firestore Database, Cloud Storage, and Analytics.
+
+This is a one-time configuration that prepares the app for future Firebase features.
+
+## Verification
+
+Run:
+
+`flutter run`
+
+## Outcome
+
+The Flutter app is successfully connected to Firebase and ready for:
+
+- Authentication
+- Firestore Database
+- Cloud Storage
+- Analytics
