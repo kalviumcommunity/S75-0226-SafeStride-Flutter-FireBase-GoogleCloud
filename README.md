@@ -574,7 +574,7 @@ MediaQuery was used to:
 Example:
 ```dart
 final screenWidth = MediaQuery.of(context).size.width;
-
+```
 
 # Flutter Animations & Transitions
 
@@ -594,3 +594,28 @@ Implicit (AnimatedContainer, AnimatedOpacity) handle animation automatically whe
 
 **How to apply in team project?**  
 Use fade-ins on screen load, button press feedback animations, and slide transitions between main screens for a polished SafeStride experience.
+
+
+# SafeStride – Firebase Setup
+
+## Overview
+
+This project connects a Flutter application to Firebase.
+Firebase provides backend services like Authentication, Firestore Database, Cloud Storage, and Analytics.
+
+This is a one-time configuration that prepares the app for future Firebase features.
+
+## Verification
+
+Run:
+
+`flutter run`
+
+## Outcome
+
+The Flutter app is successfully connected to Firebase and ready for:
+
+- Authentication
+- Firestore Database
+- Cloud Storage
+- Analytics
