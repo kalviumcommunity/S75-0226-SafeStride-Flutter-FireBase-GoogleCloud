@@ -3,13 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'screens/asset_demo_screen.dart';
 
-
 // Screens
 import 'screens/welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/second_screen.dart';
 import 'screens/scrollable_views.dart';
-import 'screens/state_management_demo.dart'; // ← ADD THIS
+import 'screens/state_management_demo.dart';
+import 'screens/animations_demo_screen.dart'; // ← ADD THIS (Sprint 2 - Animations)
 
 // Widget demos
 import 'widgets/widget_tree_demo.dart';
@@ -48,9 +48,12 @@ class MyApp extends StatelessWidget {
         '/scrollable-views': (context) => ScrollableViews(),
         '/user-input-form': (context) => const UserInputForm(),
 
-        // ✅ NEW — State Management Demo (Sprint 2)
+        // ✅ Sprint 2 — State Management Demo
         '/state-management-demo': (context) => const StateManagementDemo(),
         '/asset-demo': (context) => const AssetDemoScreen(),
+
+        // ✅ Sprint 2 — Animations & Transitions
+        '/animations-demo': (context) => const AnimationsDemoScreen(),
       },
     );
   }
