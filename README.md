@@ -676,3 +676,29 @@ No manual routing needed — when a user logs in, `authStateChanges()` emits a `
 
 ## Reflection
 `StreamBuilder` eliminated all manual `Navigator` calls for auth transitions, making the flow reactive, clean, and crash-resistant.
+
+
+# SafeStride - Firestore Database Schema
+
+SafeStride is a Flutter-based personal safety app that helps users walk safely using real-time location tracking and SOS alerts.
+
+## Collections
+- **users** — stores user profile (name, email, phoneNumber, createdAt)
+- **trips** — stores each walk session (userId, status, distance, startTime, endTime)
+
+## Sample Data
+- users/user001 → name: "Asha Kumar", email: "asha@example.com"
+- trips/trip001 → userId: "user001", status: "completed", distance: 2.4km
+
+## Schema Diagram
+See attached diagram showing users and trips collections with their fields and relationships.
+
+## Reflection
+We chose this Firestore structure because it is simple, scalable, and maps directly to how SafeStride works — each user owns multiple trips, linked by userId.
+```
+
+---
+
+Copy this into a `README.md` file in your project root, add your diagram screenshot, then commit with:
+```
+feat: designed Firestore schema and added database diagram
