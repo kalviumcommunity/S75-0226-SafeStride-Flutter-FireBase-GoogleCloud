@@ -472,9 +472,8 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              FirebaseAuth.instance.signOut();
               Navigator.pop(ctx);
-              AuthService.instance.logout();
-              // StreamBuilder in main.dart auto-navigates to LoginScreen
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade400,
