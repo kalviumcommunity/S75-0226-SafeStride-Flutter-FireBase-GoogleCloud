@@ -619,3 +619,20 @@ The Flutter app is successfully connected to Firebase and ready for:
 - Firestore Database
 - Cloud Storage
 - Analytics
+
+
+
+# Firebase SDK Integration with FlutterFire CLI
+
+This project integrates Firebase into a Flutter app using the FlutterFire CLI for automated, cross-platform configuration.
+
+## Steps Performed
+1. Installed Firebase Tools and FlutterFire CLI
+2. Ran `firebase login` and `flutterfire configure` to auto-generate `firebase_options.dart`
+3. Added `firebase_core` to `pubspec.yaml` and initialized Firebase in `main.dart`
+
+## Code
+Firebase is initialized in `main.dart` using `DefaultFirebaseOptions.currentPlatform` from the auto-generated config file.
+
+## Reflection
+FlutterFire CLI eliminated manual config file editing, automatically handling Android, iOS, and Web setup in a single command — saving time and reducing human error.
