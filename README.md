@@ -661,3 +661,18 @@ FirebaseAuth.instance.createUserWithEmailAndPassword(
 );
 
 
+# Firebase Auth Flow – SafeStride
+
+Implements a complete Firebase Authentication flow using `StreamBuilder` and `authStateChanges()` for automatic screen navigation.
+
+## What Was Built
+Three screens — **Login**, **Signup**, and **Home** — connected via a single `StreamBuilder` in `main.dart` that listens to Firebase auth state in real time.
+
+## Auth Methods
+Supports **Email/Password** and **Google Sign-In** via `AuthService` singleton.
+
+## How Navigation Works
+No manual routing needed — when a user logs in, `authStateChanges()` emits a `User` object and the app automatically switches to `HomeScreen`. On logout, it returns to `LoginScreen`.
+
+## Reflection
+`StreamBuilder` eliminated all manual `Navigator` calls for auth transitions, making the flow reactive, clean, and crash-resistant.

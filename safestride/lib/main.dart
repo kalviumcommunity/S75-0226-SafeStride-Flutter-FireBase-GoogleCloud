@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
-import 'screens/asset_demo_screen.dart';
 
-// Screens
-import 'screens/welcome_screen.dart';
+import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
-import 'screens/second_screen.dart';
-import 'screens/scrollable_views.dart';
-import 'screens/state_management_demo.dart';
-import 'screens/animations_demo_screen.dart'; // ← ADD THIS (Sprint 2 - Animations)
-
-// Widget demos
-import 'widgets/widget_tree_demo.dart';
-import 'widgets/profile_card_demo.dart';
-import 'widgets/counter_app_demo.dart';
-import 'screens/user_input_form.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,32 +18,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'SafeStride',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C63FF)),
+        useMaterial3: true,
+        fontFamily: 'Inter',
       ),
-      routes: {
-        '/': (context) => const WelcomeScreen(),
-        '/home': (context) => HomeScreen(),
-        '/second': (context) => SecondScreen(),
+      // StreamBuilder handles all auth-based navigation automatically
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          // Show loading spinner while Firebase checks auth state
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
 
-        // Widget demos
-        '/widget-tree-demo': (context) => const WidgetTreeDemo(),
-        '/profile-card-demo': (context) => const ProfileCardDemo(),
-        '/counter-app-demo': (context) => const CounterAppDemo(),
-        '/stateless-stateful-demo': (context) => const WelcomeScreen(),
-        '/scrollable-views': (context) => ScrollableViews(),
-        '/user-input-form': (context) => const UserInputForm(),
+          // User is logged in → go to HomeScreen
+          if (snapshot.hasData) {
+            return const HomeScreen();
+          }
 
-        // ✅ Sprint 2 — State Management Demo
-        '/state-management-demo': (context) => const StateManagementDemo(),
-        '/asset-demo': (context) => const AssetDemoScreen(),
-
-        // ✅ Sprint 2 — Animations & Transitions
-        '/animations-demo': (context) => const AnimationsDemoScreen(),
-      },
+          // User is not logged in → go to LoginScreen
+          return const LoginScreen();
+        },
+      ),
     );
   }
 }
