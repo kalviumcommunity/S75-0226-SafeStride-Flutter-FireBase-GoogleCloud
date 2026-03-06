@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
-
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/auth_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,33 +18,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SafeStride',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C63FF)),
-        useMaterial3: true,
-        fontFamily: 'Inter',
-      ),
-      // StreamBuilder handles all auth-based navigation automatically
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          // Show loading spinner while Firebase checks auth state
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
+  debugShowCheckedModeBanner: false,
 
-          // User is logged in → go to HomeScreen
-          if (snapshot.hasData) {
-            return const HomeScreen();
-          }
+  theme: ThemeData(
+    primarySwatch: Colors.blue,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  ),
 
-          // User is not logged in → go to LoginScreen
-          return const LoginScreen();
-        },
-      ),
-    );
+  home: StreamBuilder<User?>(
+    stream: FirebaseAuth.instance.authStateChanges(),
+
+    builder: (context, snapshot) {
+
+      // Loading while Firebase checks login state
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      }
+
+      // If user already logged in
+      if (snapshot.hasData) {
+        return HomeScreen();
+      }
+
+      // If user NOT logged in
+      return const AuthScreen();
+    },
+  ),
+);
   }
 }
