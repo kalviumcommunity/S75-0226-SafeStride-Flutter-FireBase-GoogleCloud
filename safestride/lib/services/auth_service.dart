@@ -2,59 +2,90 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  AuthService._privateConstructor();
+  // Singleton pattern — use AuthService.instance everywhere
+  AuthService._internal();
+  static final AuthService instance = AuthService._internal();
 
-  static final AuthService instance = AuthService._privateConstructor();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // Get current logged-in user
+  User? get currentUser => _auth.currentUser;
 
-  // Email login
-  Future<User?> login(String email, String password) async {
-    try {
-      final result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return result.user;
-    } catch (e) {
-      print('Login error: $e');
-      return null;
-    }
-  }
+  // Stream of auth state changes (used by StreamBuilder in main.dart)
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  // Email signup
+  // ─── Email Sign Up ───────────────────────────────────────────
   Future<User?> signUp(String email, String password) async {
     try {
-      final result = await _firebaseAuth.createUserWithEmailAndPassword(
+      final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return result.user;
-    } catch (e) {
-      print('Signup error: $e');
-      return null;
+    } on FirebaseAuthException catch (e) {
+      throw _handleAuthError(e);
     }
   }
 
-  // Google sign in
+  // ─── Email Login ─────────────────────────────────────────────
+  Future<User?> login(String email, String password) async {
+    try {
+      final result = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return result.user;
+    } on FirebaseAuthException catch (e) {
+      throw _handleAuthError(e);
+    }
+  }
+
+  // ─── Google Sign In ──────────────────────────────────────────
   Future<User?> signInWithGoogle() async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) return null;
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) return null; // User cancelled
 
-      final googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      final result = await _firebaseAuth.signInWithCredential(credential);
-
+      final result = await _auth.signInWithCredential(credential);
       return result.user;
-    } catch (e) {
-      print('Google sign-in error: $e');
-      return null;
+    } on FirebaseAuthException catch (e) {
+      throw _handleAuthError(e);
+    }
+  }
+
+  // ─── Logout ──────────────────────────────────────────────────
+  Future<void> logout() async {
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+    // StreamBuilder in main.dart will auto-navigate back to LoginScreen
+  }
+
+  // ─── Error Handler ───────────────────────────────────────────
+  String _handleAuthError(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return 'No account found with this email.';
+      case 'wrong-password':
+        return 'Incorrect password. Please try again.';
+      case 'email-already-in-use':
+        return 'An account already exists with this email.';
+      case 'weak-password':
+        return 'Password must be at least 6 characters.';
+      case 'invalid-email':
+        return 'Please enter a valid email address.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      default:
+        return e.message ?? 'An error occurred. Please try again.';
     }
   }
 }
