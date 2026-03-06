@@ -636,3 +636,28 @@ Firebase is initialized in `main.dart` using `DefaultFirebaseOptions.currentPlat
 
 ## Reflection
 FlutterFire CLI eliminated manual config file editing, automatically handling Android, iOS, and Web setup in a single command — saving time and reducing human error.
+
+
+# Firebase Authentication – Email & Password
+
+## Overview
+This task implements user authentication using Firebase Authentication with Email and Password in a Flutter application.
+
+## Features
+- User Signup
+- User Login
+- Authentication handled securely by Firebase
+- Users stored in Firebase Console
+
+## Implementation
+
+FirebaseAuth methods used:
+
+Signup:
+```dart
+FirebaseAuth.instance.createUserWithEmailAndPassword(
+  email: email,
+  password: password,
+);
+
+
