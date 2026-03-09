@@ -659,6 +659,7 @@ FirebaseAuth.instance.createUserWithEmailAndPassword(
   email: email,
   password: password,
 );
+```
 
 
 # Firebase Auth Flow – SafeStride

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/auth_service.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,13 +40,44 @@ class HomeScreen extends StatelessWidget {
 
                     // ── Quick Stats ──
                     _buildSectionTitle('Quick Stats'),
-                    const SizedBox(height: 14),
-                    _buildStatsRow(),
+const SizedBox(height: 14),
+_buildStatsRow(),
 
-                    const SizedBox(height: 28),
+const SizedBox(height: 20),
 
-                    // ── Feature Cards ──
-                    _buildSectionTitle('Features'),
+// 🔹 Firestore Tasks List
+_buildSectionTitle('Tasks from Firestore'),
+const SizedBox(height: 10),
+
+StreamBuilder(
+  stream: FirebaseFirestore.instance.collection('tasks').snapshots(),
+  builder: (context, snapshot) {
+
+    if (!snapshot.hasData) {
+      return const CircularProgressIndicator();
+    }
+
+    final tasks = snapshot.data!.docs;
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        final task = tasks[index].data();
+        return ListTile(
+          title: Text(task['title'] ?? 'No Title'),
+          subtitle: Text(task['description'] ?? 'No Description'),
+        );
+      },
+    );
+  },
+),
+
+const SizedBox(height: 28),
+
+// ── Feature Cards ──
+_buildSectionTitle('Features'),
                     const SizedBox(height: 14),
                     _buildFeatureCards(),
 
@@ -201,16 +234,29 @@ class HomeScreen extends StatelessWidget {
 
   // ── Stats Row ─────────────────────────────────────────────────
   Widget _buildStatsRow() {
-    return Row(
-      children: [
-        _buildStatCard('12', 'Routes', Icons.route_rounded, Colors.blue),
-        const SizedBox(width: 12),
-        _buildStatCard('5', 'Alerts', Icons.notifications_rounded, Colors.orange),
-        const SizedBox(width: 12),
-        _buildStatCard('98%', 'Safe', Icons.shield_rounded, Colors.green),
-      ],
-    );
-  }
+  return StreamBuilder(
+    stream: FirebaseFirestore.instance.collection('tasks').snapshots(),
+    builder: (context, snapshot) {
+
+      if (!snapshot.hasData) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      final tasks = snapshot.data!.docs;
+      final taskCount = tasks.length;
+
+      return Row(
+        children: [
+          _buildStatCard('$taskCount', 'Tasks', Icons.task, Colors.blue),
+          const SizedBox(width: 12),
+          _buildStatCard('Live', 'Firestore', Icons.cloud_done, Colors.green),
+          const SizedBox(width: 12),
+          _buildStatCard('Active', 'Realtime', Icons.sync, Colors.orange),
+        ],
+      );
+    },
+  );
+}
 
   Widget _buildStatCard(
     String value,
@@ -305,6 +351,7 @@ class HomeScreen extends StatelessWidget {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
+                  // ignore: deprecated_member_use
                   color: (f['color'] as Color).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
