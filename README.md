@@ -659,6 +659,7 @@ FirebaseAuth.instance.createUserWithEmailAndPassword(
   email: email,
   password: password,
 );
+```
 
 
 # Firebase Auth Flow – SafeStride
@@ -676,3 +677,52 @@ No manual routing needed — when a user logs in, `authStateChanges()` emits a `
 
 ## Reflection
 `StreamBuilder` eliminated all manual `Navigator` calls for auth transitions, making the flow reactive, clean, and crash-resistant.
+
+
+
+# Firebase Persistent Login – Flutter
+
+## Description
+This feature implements persistent user login using Firebase Authentication. The app automatically detects whether a user is logged in and redirects them to the appropriate screen.
+
+## Key Feature
+Users remain logged in even after restarting the app.
+
+## Implementation
+We use FirebaseAuth `authStateChanges()` to listen to login state changes.
+
+
+# Firestore Data Reading in Flutter
+
+This Flutter app demonstrates how to read data from Cloud Firestore and display it in real time.
+
+## Features
+- Connect Flutter app to Firebase Firestore
+- Read data from a collection
+- Read a single document
+- Display data in ListView
+- Real-time updates using StreamBuilder
+
+## Collection Read Example
+
+FirebaseFirestore.instance
+    .collection('tasks')
+    .snapshots();
+
+## Document Read Example
+
+FirebaseFirestore.instance
+    .collection('users')
+    .doc('userId')
+    .get();
+
+## Widgets Used
+- StreamBuilder (for real-time updates)
+- FutureBuilder (for single document)
+- ListView for displaying tasks
+
+## Reflection
+Real-time streams are useful because the UI updates automatically whenever Firestore data changes. This is helpful for apps like chat systems, dashboards, or task managers.
+
+## Challenges
+Handling null data and ensuring Firestore is initialized correctly. 
