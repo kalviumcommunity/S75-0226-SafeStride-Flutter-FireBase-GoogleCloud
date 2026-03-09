@@ -679,50 +679,27 @@ No manual routing needed — when a user logs in, `authStateChanges()` emits a `
 `StreamBuilder` eliminated all manual `Navigator` calls for auth transitions, making the flow reactive, clean, and crash-resistant.
 
 
+# SafeStride - Firestore Database Schema
 
-# Firebase Persistent Login – Flutter
+SafeStride is a Flutter-based personal safety app that helps users walk safely using real-time location tracking and SOS alerts.
 
-## Description
-This feature implements persistent user login using Firebase Authentication. The app automatically detects whether a user is logged in and redirects them to the appropriate screen.
+## Collections
+- **users** — stores user profile (name, email, phoneNumber, createdAt)
+- **trips** — stores each walk session (userId, status, distance, startTime, endTime)
 
-## Key Feature
-Users remain logged in even after restarting the app.
+## Sample Data
+- users/user001 → name: "Asha Kumar", email: "asha@example.com"
+- trips/trip001 → userId: "user001", status: "completed", distance: 2.4km
 
-## Implementation
-We use FirebaseAuth `authStateChanges()` to listen to login state changes.
-
-
-# Firestore Data Reading in Flutter
-
-This Flutter app demonstrates how to read data from Cloud Firestore and display it in real time.
-
-## Features
-- Connect Flutter app to Firebase Firestore
-- Read data from a collection
-- Read a single document
-- Display data in ListView
-- Real-time updates using StreamBuilder
-
-## Collection Read Example
-
-FirebaseFirestore.instance
-    .collection('tasks')
-    .snapshots();
-
-## Document Read Example
-
-FirebaseFirestore.instance
-    .collection('users')
-    .doc('userId')
-    .get();
-
-## Widgets Used
-- StreamBuilder (for real-time updates)
-- FutureBuilder (for single document)
-- ListView for displaying tasks
+## Schema Diagram
+See attached diagram showing users and trips collections with their fields and relationships.
 
 ## Reflection
-Real-time streams are useful because the UI updates automatically whenever Firestore data changes. This is helpful for apps like chat systems, dashboards, or task managers.
+We chose this Firestore structure because it is simple, scalable, and maps directly to how SafeStride works — each user owns multiple trips, linked by userId.
+```
 
-## Challenges
-Handling null data and ensuring Firestore is initialized correctly. 
+---
+
+Copy this into a `README.md` file in your project root, add your diagram screenshot, then commit with:
+```
+feat: designed Firestore schema and added database diagram
